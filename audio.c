@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv){
 
-int samplerate=48000;
+int samplerate=32000;
 int dur=600;
 
 if(argc!=3){
@@ -24,16 +24,31 @@ double freqmul;
 double amp;
 
 int16_t *buf=malloc(samplerate*2);
+int16_t *voice=malloc(44100*2);
 int q,e;
 
 srand48(time(0));
 
+char filename[256];
+int sample;
 for(q=0;q<dur;q++){
+sprintf(filename,"sound/%d.raw",(q%60)+1);
+
+FILE *v=fopen(filename,"rb");
+memset(voice,0,44100*2);
+fread(voice,1,44100*2,v);
+fclose(v);
+
 freqmul=2.0+drand48()*64.0;
 for(e=0;e<samplerate;e++){
-amp=(((double)samplerate-e)*32767.0/(double)samplerate);
+amp=(((double)samplerate-e)*30000.0/(double)samplerate);
 //amp=32767.0;
-buf[e]=(int16_t)((double)sin((double)e/freqmul)*amp);
+sample=(double)sin((double)e/freqmul)*amp;
+sample+=voice[e*44100/samplerate];
+if(sample>32767){sample=32767;}
+if(sample<-32768){sample=-32768;}
+
+buf[e]=(int16_t)sample;
 }
 fwrite(buf,1,samplerate*2,stdout);
 
