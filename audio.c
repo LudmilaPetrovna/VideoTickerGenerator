@@ -12,13 +12,14 @@ int main(int argc, char **argv){
 int samplerate=32000;
 int dur=600;
 
-if(argc!=3){
-printf("Usage: %s [samplerate] [duration in seconds]\n",argv[0]);
+if(argc!=4){
+printf("Usage: %s [samplerate] [duration in seconds] [is_countdown?1:0]\n",argv[0]);
 exit(1);
 }
 
 samplerate=atoi(argv[1]);
 dur=atoi(argv[2]);
+int countdown=atoi(argv[3]);
 
 double freqmul;
 double amp;
@@ -32,7 +33,11 @@ srand48(time(0));
 char filename[256];
 int sample;
 for(q=0;q<dur;q++){
+if(countdown){
+sprintf(filename,"sound/%d.raw",(60-(q%60)));
+} else {
 sprintf(filename,"sound/%d.raw",(q%60)+1);
+}
 
 FILE *v=fopen(filename,"rb");
 memset(voice,0,44100*2);
@@ -44,7 +49,7 @@ for(e=0;e<samplerate;e++){
 amp=(((double)samplerate-e)*30000.0/(double)samplerate);
 //amp=32767.0;
 sample=(double)sin((double)e/freqmul)*amp;
-sample+=voice[e*44100/samplerate];
+sample+=voice[(uint64_t)e*44100/samplerate];
 if(sample>32767){sample=32767;}
 if(sample<-32768){sample=-32768;}
 
