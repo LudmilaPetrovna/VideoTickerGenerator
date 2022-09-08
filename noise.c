@@ -17,9 +17,9 @@ double t_x,t_y,t_z,t_w;
 double x_x,x_y,x_z,x_w;
 
 for(w=0;w<height;w++){
-uv_y=(float)(height-w)/height-.5+(double)offset_y/100.0;
+uv_y=(float)(height-w)/height-.5+(double)offset_y/1.0;
 for(q=0;q<width;q++){
-uv_x=(float)q/width-.5+(double)offset_x/100.0;
+uv_x=(float)q/width-.5+(double)offset_x*100.0;
 
 
     float 
@@ -31,8 +31,8 @@ uv_x=(float)q/width-.5+(double)offset_x/100.0;
 //u=505.;
 
 // procedural col  
-o_x=uv_x*5.;
-o_y=uv_y*5.;
+o_x=uv_x*25.;
+o_y=uv_y*25.;
 o_z=5.;
 o_w=5.;
 for (int i=0; i<200;i++){

@@ -12,14 +12,15 @@ int main(int argc, char **argv){
 int samplerate=32000;
 int dur=600;
 
-if(argc!=4){
-printf("Usage: %s [samplerate] [duration in seconds] [is_countdown?1:0]\n",argv[0]);
+if(argc!=5){
+printf("Usage: %s [language] [samplerate] [duration in seconds] [is_countdown?1:0]\n",argv[0]);
 exit(1);
 }
 
-samplerate=atoi(argv[1]);
-dur=atoi(argv[2]);
-int countdown=atoi(argv[3]);
+char *lang=argv[1];
+samplerate=atoi(argv[2]);
+dur=atoi(argv[3]);
+int countdown=atoi(argv[4]);
 
 double freqmul;
 double amp;
@@ -34,9 +35,9 @@ char filename[256];
 int sample;
 for(q=0;q<dur;q++){
 if(countdown){
-sprintf(filename,"sound/%d.raw",(60-(q%60)));
+sprintf(filename,"sound/%s/%d.raw",lang,(60-(q%60)));
 } else {
-sprintf(filename,"sound/%d.raw",(q%60)+1);
+sprintf(filename,"sound/%s/%d.raw",lang,(q%60)+1);
 }
 
 FILE *v=fopen(filename,"rb");

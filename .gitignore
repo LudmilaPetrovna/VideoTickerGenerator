@@ -5,3 +5,7 @@
 *.m4a
 *.wav
 *.flac
+*.srt
+*.ass
+*.out
+*.ts
