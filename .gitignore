@@ -12,3 +12,5 @@
 
 *.o
 a.out
+*.bak
+*.png

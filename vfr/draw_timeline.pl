@@ -2,7 +2,7 @@ use GD;
 use Data::Dumper;
 use File::Slurp;
 
-my $exam_file='vfr_test_sound.mp4';
+my $exam_file='vfr_test.mp4';
 #$exam_file='ultra_noise.mp4';
 
 my $timeline_width=1900;
